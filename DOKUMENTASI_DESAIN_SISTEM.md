@@ -970,69 +970,93 @@ classDiagram
 
 ## 3.4 Arsitektur Sistem
 
+### Presentation Layer
+
+```mermaid
+flowchart LR
+    browser[Browser] --> index[index.php]
+    index --> main[main.php]
+    main --> header[header.php]
+    main --> home[home.php]
+    main --> footer[footer.php]
+```
+
+### Business Logic Layer
+
 ```mermaid
 flowchart TB
-    subgraph "Presentation Layer"
-        index[index.php - Login]
-        main[main.php - Router Utama]
-        header[header.php - Navigasi]
-        footer[footer.php]
-        home[home.php - Dashboard]
-    end
-  
-    subgraph "Business Logic Layer"
-        direction TB
-        common_list[common_list.php - List Generator]
-        common_entry[common_entry.php - Form Generator]
-        common_api[common_api.php - API CRUD]
-        common_cuquery[Common_CUQuery - Query Builder]
-        common_generator[Common_Generator - Input Renderer]
-        common_generator_dtl[Common_Generator_DTL - Detail Renderer]
-    end
-  
-    subgraph "Modules"
-        kasir[kasir/ - Penjualan]
-        kosy[kosy/ - Konsinyasi]
-        retur[retur/ - Retur]
-        brg_msk[brg_msk/ - Barang Masuk]
-        po[po/ - Purchase Order]
-        keu[keu/ - Keuangan]
-        laporan[laporan/ - Reports]
-        master[master/ - Master Data]
-        pelunasan[pelunasan/ - Pelunasan]
-        stock_opt[stock_opt/ - Stok Opname]
-        voucher[voucher/ - Voucher]
-        sistem[sistem/ - System Config]
-    end
-  
-    subgraph "Data Access Layer"
-        connect[include/connect.php]
-        class_mysql[class_Mysql_connect.php]
-        class_pdo[class_PDO_connect.php]
-    end
-  
-    subgraph "Database"
-        db[(MySQL kopkar_rsi<br/>39 Tabel)]
-    end
-  
-    main --> common_list
-    main --> common_entry
-    main --> home
-    main --> kasir & kosy & retur & brg_msk & po & keu & laporan & master & pelunasan & stock_opt & voucher & sistem
-  
-    common_entry --> common_generator
-    common_entry --> common_generator_dtl
-    common_api --> common_cuquery
-  
-    common_list --> connect
+    main[main.php - Router] --> common_list[common_list.php]
+    main --> common_entry[common_entry.php]
+    main --> common_api[common_api.php]
+
+    common_entry --> common_generator[Common_Generator]
+    common_entry --> common_generator_dtl[Common_Generator_DTL]
+    common_api --> common_cuquery[Common_CUQuery]
+```
+
+### Modules Layer
+
+```mermaid
+flowchart LR
+    main[main.php] --> kasir[kasir/]
+    main --> kosy[kosy/]
+    main --> retur[retur/]
+    main --> brg_msk[brg_msk/]
+    main --> po[po/]
+    main --> keu[keu/]
+    main --> laporan[laporan/]
+    main --> master[master/]
+    main --> pelunasan[pelunasan/]
+    main --> stock_opt[stock_opt/]
+    main --> voucher[voucher/]
+    main --> sistem[sistem/]
+```
+
+### Data Access Layer
+
+```mermaid
+flowchart LR
+    common_list --> connect[connect.php]
     common_entry --> connect
     common_api --> connect
     modules --> connect
-  
-    connect --> class_mysql
-    connect --> class_pdo
-    class_mysql --> db
+
+    connect --> class_mysql[class_Mysql_connect.php]
+    connect --> class_pdo[class_PDO_connect.php]
+```
+
+### Database Layer
+
+```mermaid
+flowchart LR
+    class_mysql --> db[(MySQL)]
     class_pdo --> db
+```
+
+### Stack Overview
+
+```mermaid
+flowchart TB
+    subgraph L1["🖥️ Presentation"]
+        idx[index.php] --> mn[main.php]
+    end
+    subgraph L2["⚙️ Business Logic"]
+        cl[common_list] --> ce[common_entry] --> capi[common_api]
+    end
+    subgraph L3["📦 Modules"]
+        mod[12 Business Modules]
+    end
+    subgraph L4["🔌 Data Access"]
+        conn[connect.php]
+    end
+    subgraph L5["🗄️ Database"]
+        sqldb[(MySQL kopkar_rsi)]
+    end
+
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    L4 --> L5
 ```
 
 ## 3.5 Deskripsi Tabel Database (39 Tabel)
