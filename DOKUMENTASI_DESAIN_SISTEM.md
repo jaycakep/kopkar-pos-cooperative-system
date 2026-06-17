@@ -1036,7 +1036,7 @@ flowchart LR
 ### Stack Overview
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph L1["🖥️ Presentation"]
         idx[index.php] --> mn[main.php]
     end
@@ -1053,10 +1053,7 @@ flowchart TB
         sqldb[(MySQL kopkar_rsi)]
     end
 
-    L1 --> L2
-    L2 --> L3
-    L3 --> L4
-    L4 --> L5
+    L1 --> L2 --> L3 --> L4 --> L5
 ```
 
 ## 3.5 Deskripsi Tabel Database (39 Tabel)
