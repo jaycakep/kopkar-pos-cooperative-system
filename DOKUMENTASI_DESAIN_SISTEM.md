@@ -6,78 +6,111 @@
 
 # 1. USE CASE DIAGRAM
 
-## 1.1 Diagram Use Case Utama
+### 1.1 Kasir
 
 ```mermaid
-graph TD
-    subgraph "Sistem KOPKAR RSI"
-        subgraph "Manajemen Penjualan"
-            UC1["Kasir / Penjualan"]
-            UC2["Penjualan Kredit"]
-            UC3["Penjualan Voucher"]
-            UC4["Retur Penjualan"]
-        end
-        subgraph "Manajemen Barang"
-            UC5["Barang Masuk"]
-            UC6["Konsinyasi Masuk"]
-            UC7["Retur Konsinyasi"]
-            UC8["Purchase Order"]
-            UC9["Ganti Unit Barang"]
-            UC10["Stock Opname"]
-        end
-        subgraph "Manajemen Keuangan"
-            UC11["Simpanan / Modal Anggota"]
-            UC12["Pinjaman Anggota"]
-            UC13["Pelunasan Kredit"]
-            UC14["Pembayaran Pinjaman"]
-            UC15["Jurnal Akuntansi"]
-        end
-        subgraph "Master Data"
-            UC16["Kelola Anggota"]
-            UC17["Kelola Barang"]
-            UC18["Kelola Supplier"]
-            UC19["Kelola Unit/Gudang"]
-            UC20["Kelola Satuan"]
-        end
-        subgraph "Laporan"
-            UC21["Laporan Penjualan"]
-            UC22["Laporan Stok Barang"]
-            UC23["Laporan HPP"]
-            UC24["Laporan Kartu Stok"]
-            UC25["Laporan Kredit"]
-            UC26["Laporan Potong Gaji"]
-            UC27["Laporan Kasir"]
-            UC28["Laporan Konsinyasi"]
-        end
-        subgraph "Sistem"
-            UC29["Login"]
-            UC30["Manajemen Pengguna"]
-            UC31["Manajemen Role & Hak Akses"]
-            UC32["Konfigurasi Perusahaan"]
-            UC33["Manajemen Menu"]
-        end
+graph LR
+    subgraph "👤 Aktor"
+        A["👤 Kasir"]
     end
-  
-    A[👤 Kasir] --> UC1
+
+    subgraph "📦 Manajemen Penjualan"
+        direction TB
+        UC1["Kasir / Penjualan"]
+        UC2["Penjualan Kredit"]
+        UC3["Penjualan Voucher"]
+        UC4["Retur Penjualan"]
+        UC29["Login"]
+    end
+
+    A --> UC1
     A --> UC2
     A --> UC3
     A --> UC4
-    A --> UC27
-  
-    G[👤 Gudang] --> UC5
+    A --> UC29
+```
+
+### 1.2 Gudang
+
+```mermaid
+graph LR
+    subgraph "👤 Aktor"
+        G["👤 Gudang"]
+    end
+
+    subgraph "📦 Manajemen Barang"
+        direction TB
+        UC5["Barang Masuk"]
+        UC6["Konsinyasi Masuk"]
+        UC7["Retur Konsinyasi"]
+        UC8["Purchase Order"]
+        UC9["Ganti Unit Barang"]
+        UC10["Stock Opname"]
+        UC29["Login"]
+    end
+
+    G --> UC5
     G --> UC6
     G --> UC7
     G --> UC8
     G --> UC9
     G --> UC10
-  
-    K[👤 Keuangan] --> UC11
+    G --> UC29
+```
+
+### 1.3 Keuangan
+
+```mermaid
+graph LR
+    subgraph "👤 Aktor"
+        K["👤 Keuangan"]
+    end
+
+    subgraph "📦 Manajemen Keuangan"
+        direction TB
+        UC11["Simpanan / Modal Anggota"]
+        UC12["Pinjaman Anggota"]
+        UC13["Pelunasan Kredit"]
+        UC14["Pembayaran Pinjaman"]
+        UC15["Jurnal Akuntansi"]
+        UC29["Login"]
+    end
+
+    K --> UC11
     K --> UC12
     K --> UC13
     K --> UC14
     K --> UC15
-  
-    AD[👤 Admin] --> UC16
+    K --> UC29
+```
+
+### 1.4 Admin
+
+```mermaid
+graph LR
+    subgraph "👤 Aktor"
+        AD["👤 Admin"]
+    end
+
+    subgraph "📦 Master Data"
+        direction TB
+        UC16["Kelola Anggota"]
+        UC17["Kelola Barang"]
+        UC18["Kelola Supplier"]
+        UC19["Kelola Unit/Gudang"]
+        UC20["Kelola Satuan"]
+    end
+
+    subgraph "📦 Sistem"
+        direction TB
+        UC30["Manajemen Pengguna"]
+        UC31["Manajemen Role &amp; Hak Akses"]
+        UC32["Konfigurasi Perusahaan"]
+        UC33["Manajemen Menu"]
+        UC29["Login"]
+    end
+
+    AD --> UC16
     AD --> UC17
     AD --> UC18
     AD --> UC19
@@ -86,16 +119,39 @@ graph TD
     AD --> UC31
     AD --> UC32
     AD --> UC33
-  
-    P[👤 Pimpinan] --> UC21
+    AD --> UC29
+```
+
+### 1.5 Pimpinan
+
+```mermaid
+graph LR
+    subgraph "👤 Aktor"
+        P["👤 Pimpinan"]
+    end
+
+    subgraph "📦 Laporan"
+        direction TB
+        UC21["Laporan Penjualan"]
+        UC22["Laporan Stok Barang"]
+        UC23["Laporan HPP"]
+        UC24["Laporan Kartu Stok"]
+        UC25["Laporan Kredit"]
+        UC26["Laporan Potong Gaji"]
+        UC27["Laporan Kasir"]
+        UC28["Laporan Konsinyasi"]
+        UC29["Login"]
+    end
+
+    P --> UC21
     P --> UC22
     P --> UC23
     P --> UC24
     P --> UC25
     P --> UC26
+    P --> UC27
     P --> UC28
-
-    ALL[👤 Semua Pengguna] --> UC29
+    P --> UC29
 ```
 
 ## 1.2 Aktor Sistem
